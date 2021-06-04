@@ -228,6 +228,19 @@
     <Content Include="Controls\checkright.ascx" />
     <Content Include="Controls\copyright.ascx" />
     <Content Include="Global.asax" />
+    <Content Include="UploadImgs\Gift\04d232bfac9f46c09eadfba286e0cc91.jpg" />
+    <Content Include="UploadImgs\Gift\05df6ba146ab4926ae5ded1a8c1a1417.jpg" />
+    <Content Include="UploadImgs\Gift\18cffcd849a448ee9a643fb439ee0358.jpg" />
+    <Content Include="UploadImgs\Gift\1e3ec54c302e4d33909c1362d9e286a0.jpg" />
+    <Content Include="UploadImgs\Gift\1e96a8102a3e4b1e8d0ee872eb0a1e1d.jpg" />
+    <Content Include="UploadImgs\Gift\6d80ae2bf3b24b6c98e2f24c58a55a16.jpg" />
+    <Content Include="UploadImgs\Gift\84975eda1e794a10af8eb77d10daa4d4.jpg" />
+    <Content Include="UploadImgs\Gift\9cecac75bf16485b810f26e23dc7551d.jpg" />
+    <Content Include="UploadImgs\Gift\9fd3656778d24890b17a5ed796d5f31c.jpg" />
+    <Content Include="UploadImgs\Gift\ac69f2bd719840058a251890af0206e3.jpg" />
+    <Content Include="UploadImgs\Gift\b2975190fe25489bb49958f578e6099c.jpg" />
+    <Content Include="UploadImgs\Gift\de5003272dbb42ce88314c382754fc6d.jpg" />
+    <Content Include="UploadImgs\Gift\dfc188c8421a435f9c7b04833c9618d0.jpg" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -434,7 +447,6 @@
   <ItemGroup>
     <Folder Include="Components\" />
     <Folder Include="Images\" />
-    <Folder Include="UploadImgs\Gift\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

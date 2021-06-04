@@ -85,8 +85,15 @@
             </div>
             <div class="bom">
             	<div class="left">
-            		<div class="cir"></div>
-            		<a href="yg-index.aspx"><div class="text">继续添加</div></a>
+            		<%--<div class="cir"></div>--%>
+            		
+            	</div>
+                <div class="right">
+                    <a href="yg-index.aspx"><span>继续添加</span></a>
+            	</div>
+                <div class="left">
+            		<%--<div class="cir"></div>--%>
+            		
             	</div>
             	<div class="right">
             		<%if (tbGiftTemps.Count > 0)
@@ -121,16 +128,22 @@
         }
         //提交
         function SubmitData() { //从库中获取是哪几个礼品
-            $.post("./gift-shop.aspx?op=submit", function (data) {
-                console.log(data);
-                var data = JSON.parse(data);
-                if (data.SUCCESS === 'true') {
-                    window.location = './gift-shop.aspx';
-                } else {
-                    layer.alert(data.MESSAGE, { icon: 5 });
-                    return false;
-                }
+            layui.use('layer', function () { //独立版的layer无需执行这一句
+                layer = layui.layer; //独立版的layer无需执行这一句
+                $.post("./gift-shop.aspx?op=submit", function (data) {
+                    console.log(data);
+                    var data = JSON.parse(data);
+                    if (data.SUCCESS === 'true') {
 
+                        layer.msg('订单提交成功 等待审批', { icon: 1, time: 5000}, function () {
+                            window.location = './yg-index.aspx';
+                        });
+                    } else {
+                        layer.alert(data.MESSAGE, { icon: 5 });
+                        return false;
+                    }
+
+                });
             });
         }
         //数字改变
@@ -192,37 +205,44 @@
                     border: 1px solid #ddd;
                     margin: 0 20px;
                 }
-                      .shop-container .item-pro .title {
+
+                .shop-container .item-pro .title {
                     width: 300px;
                     text-align: center;
                     line-height: 15px;
                 }
-                               .shop-container .item-pro .name-title {
+
+                .shop-container .item-pro .name-title {
                     width: 300px;
                     text-align: center;
                     line-height: 15px;
                 }
-                         .shop-container .item-pro .stock-title {
+
+                .shop-container .item-pro .stock-title {
                     width: 300px;
                     text-align: center;
                     line-height: 15px;
                 }
-                           .shop-container .item-pro .input-number-title {
+
+                .shop-container .item-pro .input-number-title {
                     width: 100px;
                     text-align: center;
-                     line-height: 15px;
+                    line-height: 15px;
                 }
-                             .shop-container .item-pro .del-title {
+
+                .shop-container .item-pro .del-title {
                     line-height: 15px;
                     width: 150px;
                     text-align: center;
                 }
+
                 .shop-container .item-pro .name {
                     width: 300px;
                     text-align: center;
                     line-height: 120px;
                 }
-                 .shop-container .item-pro .stock {
+
+                .shop-container .item-pro .stock {
                     width: 300px;
                     text-align: center;
                     line-height: 120px;
@@ -252,7 +272,7 @@
         }
 
             .bom .left {
-                border: 1px solid #004186;
+                /*border: 1px solid #004186;*/
                 width: 620px;
                 line-height: 50px;
                 display: flex;
@@ -284,7 +304,10 @@
     </style>
 </body>
 </html>
-   <script src="./lib/layui/layui.js" charset="utf-8"></script>
+       <script src="./lib/layui/layui.js" charset="utf-8">
+        </script>
+        <script src="./js/x-layui.js" charset="utf-8">
+        </script>
         <script src="./js/x-admin.js"></script>
         <script>
             var _hmt = _hmt || [];

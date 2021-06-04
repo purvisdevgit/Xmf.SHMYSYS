@@ -13,7 +13,9 @@ namespace Xmf.SHMYSYS.Web.Admin
     public partial class member_add : System.Web.UI.Page
     {
         public List<Model.tbRole> tbRoles = new List<Model.tbRole>();
+        public List<Model.tbUser> tbUsers = new List<Model.tbUser>();
         private tbRole role = new tbRole();
+        private tbUser user = new tbUser();
         protected void Page_Load(object sender, EventArgs e)
         {
             ReturnMsg Rms = new ReturnMsg();
@@ -32,6 +34,7 @@ namespace Xmf.SHMYSYS.Web.Admin
                     string strEmail = Request.Form["email"];
                     string strAddress = Request.Form["address"];
                     string strPassword = Request.Form["password"];
+                    string strSuperior = Request.Form["superior"];
                     Model.tbUser user = new Model.tbUser();
                     user.GUID = Guid.NewGuid().ToString("B");
                     user.USERNAME = strUsername;
@@ -46,6 +49,14 @@ namespace Xmf.SHMYSYS.Web.Admin
                     user.ADDRESS = strAddress;
                     user.ADDTIME = DateTime.Now;
                     user.ISUSE = 1;
+                    if (strRole == "{1261305D-F882-44FE-9F0B-3E7D37DBEBD6}")
+                    {
+                        user.SUPERIOR = strSuperior;
+                    }
+                    else
+                    {
+                        user.SUPERIOR = "";
+                    }
                     tbUser user1 = new tbUser();
                     if(user1.GetList(string.Format(" EMAIL = '{0}'", strEmail)).Tables[0].Rows.Count > 0){
                         Rms.SUCCESS = SUCCESS.F;
@@ -77,6 +88,7 @@ namespace Xmf.SHMYSYS.Web.Admin
             else
             {
                 tbRoles = role.GetModelList(" 1=1");
+                tbUsers = user.GetModelList(" ROLE='{C95C99D2-382E-4670-8849-3802558E7778}'");
             }
         }
     }

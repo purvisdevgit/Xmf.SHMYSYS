@@ -57,7 +57,7 @@
                     <span class="x-red">*</span>角色
                 </label>
                 <div class="layui-input-inline">
-                    <select name="role" id="role">
+                    <select name="role" id="role" lay-filter="filter">
                         <option value="">请选择角色</option>
                         <%foreach (var role in tbRoles)
                             {%>
@@ -65,6 +65,23 @@
                           <% } %>
                     </select>
                 </div>
+                </div>
+                <div id="div_superior" style="display: none;">
+                    <div class="layui-form-item">
+                <label for="L_superior" class="layui-form-label">
+                    <span class="x-red">*</span>员工上级
+                </label>
+                <div class="layui-input-inline">
+                    <select name="superior" id="superior">
+                        <option value="">请选择员工上级</option>
+                        <%foreach (var user in tbUsers)
+                            {%>
+                               <option id="<%= user.GUID%>" value="<%= user.GUID%>"><%= user.EMAIL%></option>
+                          <% } %>
+                    </select>
+                </div>
+                    </div>
+                    </div>
               <%--  <div class="layui-form-item">
                     <label for="L_username" class="layui-form-label">
                         <span class="x-red">*</span>性别
@@ -136,6 +153,9 @@
     <script src="./js/x-layui.js" charset="utf-8">
     </script>
     <script>
+        $(){
+
+        }
         layui.use(['form', 'layer'], function () {
             $ = layui.jquery;
             var form = layui.form()
@@ -155,7 +175,6 @@
                     }
                 }
             });
-
 
 
         });
@@ -194,7 +213,7 @@
             //监听提交
             form.on('submit(add)', function (data) {
                 console.log(data);
-                $.post("./member-add.aspx?add=1", { 'username': data.field.username, 'nickname': data.field.nickname, 'avatarfile': $("#avatar").attr("src"), 'role': data.field.role, 'sex': data.field.sex, 'phone': data.field.phone, 'email': data.field.email, 'address': data.field.address, 'password': data.field.repass }, function (data) {
+                $.post("./member-add.aspx?add=1", { 'username': data.field.username, 'nickname': data.field.nickname, 'avatarfile': $("#avatar").attr("src"), 'role': data.field.role, 'sex': data.field.sex, 'phone': data.field.phone, 'email': data.field.email, 'address': data.field.address, 'password': data.field.repass, 'superior': data.field.superior }, function (data) {
 
                     console.log(data);
                     var data = JSON.parse(data);
@@ -219,6 +238,16 @@
                 return false;
             });
 
+            form.on('select(filter)', function (data) {
+                console.log(data.elem); //得到select原始DOM对象
+                console.log(data.value); //得到被选中的值
+                console.log(data.othis); //得到美化后的DOM对象
+                if (data.value == "{1261305D-F882-44FE-9F0B-3E7D37DBEBD6}") {//如果选中是员工 则需要选择上级主管
+                    $("#div_superior").show();//显示
+                } else {
+                    $("#div_superior").hide();//隐藏div
+                }
+            });
 
         });
     </script>

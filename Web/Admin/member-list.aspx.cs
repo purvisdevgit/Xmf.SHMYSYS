@@ -147,6 +147,10 @@ namespace Xmf.SHMYSYS.Web.Admin
                     }
                     giftView.ADDTIME = Convert.ToDateTime(row["ADDTIME"].ToString()).ToString("yyyy年MM月dd日 HH:mm:ss");
                     giftView.ISUSE = row["ISUSE"].ToString() == "1" ? "已启用" : "未启用";
+                    if (row["SUPERIOR"]!=DBNull.Value&& row["SUPERIOR"]!=null&& row["SUPERIOR"].ToString().Trim()!="")
+                    {
+                        giftView.SUPERIOR = user.GetModel(row["SUPERIOR"].ToString()).EMAIL;
+                    }
                     giftViews.Add(giftView);
                 }
             }
@@ -165,6 +169,7 @@ namespace Xmf.SHMYSYS.Web.Admin
             public string ROLE { get; set; }
             public string ADDTIME { get; set; }
             public string ISUSE { get; set; }
+            public string SUPERIOR { get; set; }
         }
     }
 }

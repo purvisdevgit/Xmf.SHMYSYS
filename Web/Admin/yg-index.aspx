@@ -57,10 +57,12 @@
                             {%>
                         <%-- <a href="./gift-detail.aspx?giftguid=<%=gift.GUID %>">--%>
                         <div class="item-pro">
+                            <p style="height:25px"></p>
                             <img src="<%=gift.IMAGE %>" class="img" />
-                            <a href="./gift-shop.aspx?giftguid=<%=gift.GUID %>">
+                            <p style="height:10px"></p>
                                 <p><%=gift.GIFTNAME %></p>
-                            </a>
+                            <p style="height:10px"></p>
+                            <a href="./gift-shop.aspx?giftguid=<%=gift.GUID %>" class="xgclass">选购</a>
                         </div>
 
                         <%}
@@ -187,7 +189,8 @@
             .product-list .item-pro {
                 float: left;
                 margin-left: 40px;
-                height:200px;
+                height:250px;
+                text-align:center;
             }
 
                 .product-list .item-pro img {
@@ -278,6 +281,21 @@
         /*添加鼠标移入图片效果*/
         .img {
             cursor: url("ico/放大镜.png"), auto;
+        }
+        .xgclass {
+          height: 18px;
+            line-height: 18px;
+            padding: 0 11px;
+            background: #004186;
+          /*  border: 1px #26bbdb solid;
+            border-radius: 3px;*/
+            /*color: #fff;*/
+            display: inline-block;
+            text-decoration: none;
+            font-size: 12px;
+            outline: none;
+            color:white;
+            width:50px;
         }
     </style>
 </body>

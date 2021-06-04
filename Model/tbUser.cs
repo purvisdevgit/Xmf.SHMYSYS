@@ -122,6 +122,16 @@ namespace Xmf.SHMYSYS.Model
             get { return _address; }
             set { _address = value; }
         }
+
+        /// <summary>
+        /// SUPERIOR 
+        /// </summary>		
+        private string _superior;
+        public string SUPERIOR
+        {
+            get { return _superior; }
+            set { _superior = value; }
+        }
         #endregion
     }
 }

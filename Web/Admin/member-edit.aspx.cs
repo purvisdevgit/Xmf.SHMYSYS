@@ -16,6 +16,7 @@ namespace Xmf.SHMYSYS.Web.Admin
         private tbRole role = new tbRole();
         public Model.tbUser user = new Model.tbUser();
         private tbUser user1 = new tbUser();
+        public List<Model.tbUser> tbUsers = new List<Model.tbUser>();
         protected void Page_Load(object sender, EventArgs e)
         {
             ReturnMsg Rms = new ReturnMsg();
@@ -34,6 +35,7 @@ namespace Xmf.SHMYSYS.Web.Admin
                     string strPhone = Request.Form["phone"];
                     string strEmail = Request.Form["email"];
                     string strAddress = Request.Form["address"];
+                    string strSuperior = Request.Form["superior"];
                     tbUser user1 = new tbUser();
                     Model.tbUser user = user1.GetModel(strGuid);
                     user.USERNAME = strUsername;
@@ -47,6 +49,13 @@ namespace Xmf.SHMYSYS.Web.Admin
                     user.ADDRESS = strAddress;
                     user.ADDTIME = DateTime.Now;
                     user.ISUSE = 1;
+                    if (strRole == "{1261305D-F882-44FE-9F0B-3E7D37DBEBD6}")
+                    {
+                        user.SUPERIOR = strSuperior;
+                    }
+                    else {
+                        user.SUPERIOR = "";
+                    }
                     user1.Update(user);
                     Rms.SUCCESS = SUCCESS.T;
                     Rms.STATE = STATE.T;
@@ -72,6 +81,7 @@ namespace Xmf.SHMYSYS.Web.Admin
                 string strParam = strQuery.Split('=')[1];
                 user = user1.GetModel(strParam);
                 tbRoles = role.GetModelList(" 1=1");
+                tbUsers = user1.GetModelList(" ROLE='{C95C99D2-382E-4670-8849-3802558E7778}'");
 
             }
         }

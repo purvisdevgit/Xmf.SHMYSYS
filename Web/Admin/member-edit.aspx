@@ -54,7 +54,7 @@
                     <span class="x-red">*</span>角色
                 </label>
                 <div class="layui-input-inline">
-                    <select name="role" id="role">
+                    <select name="role" id="role"  lay-filter="filter">
                         <option value="">请选择角色</option>
                         <%foreach (var role in tbRoles)
                             {%>
@@ -62,6 +62,29 @@
                           <% } %>
                     </select>
                 </div>
+                      </div>
+                <div id="div_superior" <%if (user.ROLE!="{1261305D-F882-44FE-9F0B-3E7D37DBEBD6}")
+                    {%> style="display: none;"<%} %>>
+                    <div class="layui-form-item">
+                <label for="L_superior" class="layui-form-label">
+                    <span class="x-red">*</span>员工上级
+                </label>
+                <div class="layui-input-inline">
+                    <select name="superior" id="superior">
+                        <option value="">请选择员工上级</option>
+                        <%foreach (var user2 in tbUsers)
+                            {
+                                if (user2.GUID==user.GUID)
+                                {
+                                    continue;
+                                }
+                                %>
+                               <option id="<%= user2.GUID%>" <%if (user.SUPERIOR==user2.GUID&&!string.IsNullOrEmpty(user.SUPERIOR)){%> selected="selected" <%} %> value="<%= user2.GUID%>"><%= user2.EMAIL%></option>
+                          <% } %>
+                    </select>
+                </div>
+                    </div>
+                    </div>
                <%--  <div class="layui-form-item">
                     <label for="L_username" class="layui-form-label">
                         <span class="x-red">*</span>性别
@@ -135,7 +158,7 @@
               //监听提交
               form.on('submit(save)', function (data) {
                   console.log(data);
-                  $.post("./member-edit.aspx?edit=1", { 'guid': '<%=user.GUID%>', 'username': $("#username").val(), 'nickname': $("#nickname").val(), 'avatarfile': $("#avatar").attr("src"), 'role': $("#role option:selected").val(), 'sex': $("input[name='sex']:checked").val(), 'phone': $("#phone").val(), 'email': $("#email").val(), 'address': $("#address").val() }, function (data) {
+                  $.post("./member-edit.aspx?edit=1", { 'guid': '<%=user.GUID%>', 'username': $("#username").val(), 'nickname': $("#nickname").val(), 'avatarfile': $("#avatar").attr("src"), 'role': $("#role option:selected").val(), 'sex': $("input[name='sex']:checked").val(), 'phone': $("#phone").val(), 'email': $("#email").val(), 'address': $("#address").val(), 'superior': $("#superior option:selected").val() }, function (data) {
 
                         console.log(data);
                         var data = JSON.parse(data);
@@ -159,6 +182,16 @@
                     });
                     return false;
                 });
+              form.on('select(filter)', function (data) {
+                  console.log(data.elem); //得到select原始DOM对象
+                  console.log(data.value); //得到被选中的值
+                  console.log(data.othis); //得到美化后的DOM对象
+                  if (data.value == "{1261305D-F882-44FE-9F0B-3E7D37DBEBD6}") {//如果选中是员工 则需要选择上级主管
+                      $("#div_superior").show();//显示
+                  } else {
+                      $("#div_superior").hide();//隐藏div
+                  }
+              });
 
 
 

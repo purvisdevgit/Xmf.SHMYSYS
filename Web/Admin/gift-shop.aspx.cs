@@ -200,7 +200,7 @@ namespace Xmf.SHMYSYS.Web.Admin
                         vgiftTemp.GIFTNAME = vgift.GIFTNAME;
                         vgiftTemp.IMAGE = vgift.IMAGE;
                         vgiftTemp.DETAIL = vgift.DETAIL;
-                        vgiftTemp.APPLYNAME = user.USERNAME;
+                        vgiftTemp.APPLYNAME = user.EMAIL;
                         vgiftTemp.APPLYNUM = 1;
                         vgiftTemp.APPLYDATE = DateTime.Now;
                         vgiftTemp.ISUSE = 1;

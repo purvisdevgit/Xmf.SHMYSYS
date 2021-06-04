@@ -348,7 +348,7 @@ namespace Xmf.SHMYSYS.DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("select GUID,GIFTGUID,APPLYNUM,APPLYNAME,APPLYSTATE,APPLYDATE,AUDITDATE,RELEASEDATE,ISUSE,AUDITNAME,RELEASENAME,REMARK,GIFTNAME,IMAGE,DETAIL ");
-            strSql.Append(" FROM tbApply ");
+            strSql.Append(" FROM tbApply");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);

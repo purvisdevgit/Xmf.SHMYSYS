@@ -45,7 +45,7 @@ namespace Xmf.SHMYSYS.Web.Admin
                         }
                         Model.tbApply apply1 = apply.GetModel(guid);
                         apply1.AUDITDATE = DateTime.Now;
-                        apply1.AUDITNAME = Global.TbUser.USERNAME;
+                        apply1.AUDITNAME = Global.TbUser.EMAIL;
                         apply1.APPLYSTATE = 1; //审核成功
                         apply.AUDITUpdate(apply1);
                     }
@@ -107,7 +107,7 @@ namespace Xmf.SHMYSYS.Web.Admin
                         //gift1.NUMBER = giftNum - applyNum;
                         //gift.Update(gift1);
                         apply1.RELEASEDATE = DateTime.Now;
-                        apply1.RELEASENAME = Global.TbUser.USERNAME;
+                        apply1.RELEASENAME = Global.TbUser.EMAIL;
                         apply1.APPLYSTATE = 2; //发放成功
                         apply.RELEASEUpdate(apply1);
                     }
@@ -204,7 +204,10 @@ namespace Xmf.SHMYSYS.Web.Admin
                 if (strQuery.Contains("giftstate=0")) //已申请 显示所有
                 {
                     tbApply apply = new tbApply();
-                    DataTable dtApply = apply.GetList(string.Format(" APPLYNAME='{0}'", user.USERNAME)).Tables[0];
+                    DataTable dtApply = apply.GetList(string.Format(" APPLYNAME='{0}'", user.EMAIL)).Tables[0];
+                    DataView dv = dtApply.DefaultView;
+                    dv.Sort = "APPLYDATE DESC";
+                    dtApply = dv.ToTable();
                     foreach (DataRow dr in dtApply.Rows)
                     {
                         SQGiftView sQGiftView = new SQGiftView();
@@ -243,7 +246,23 @@ namespace Xmf.SHMYSYS.Web.Admin
                 {
                     tbApply apply = new tbApply();
                     DataTable dtApply = apply.GetList(" APPLYSTATE=0").Tables[0];
-                    foreach (DataRow dr in dtApply.Rows)
+                    tbUser userBll = new tbUser();
+                    DataTable dtQxUser= userBll.GetList(" SUPERIOR='"+ Global.TbUser.GUID+ "'").Tables[0];
+                    DataTable dtApplyAdd = dtApply.Clone();
+                    foreach (DataRow dr1 in dtApply.Rows)
+                    {
+                        foreach (DataRow dr2 in dtQxUser.Rows)
+                        {
+                            if (dr1["APPLYNAME"].ToString()== dr2["EMAIL"].ToString())
+                            {
+                                dtApplyAdd.Rows.Add(dr1.ItemArray);
+                            }
+                        }
+                    }
+                    DataView dv = dtApplyAdd.DefaultView;
+                    dv.Sort = "APPLYDATE DESC";
+                    dtApplyAdd = dv.ToTable();
+                    foreach (DataRow dr in dtApplyAdd.Rows)
                     {
                         SQGiftView sQGiftView = new SQGiftView();
                         sQGiftView.GUID = dr["GUID"].ToString();
@@ -280,6 +299,9 @@ namespace Xmf.SHMYSYS.Web.Admin
                 {
                     tbApply apply = new tbApply();
                     DataTable dtApply = apply.GetList(" APPLYSTATE=1").Tables[0];
+                    DataView dv = dtApply.DefaultView;
+                    dv.Sort = "APPLYDATE DESC";
+                    dtApply = dv.ToTable();
                     foreach (DataRow dr in dtApply.Rows)
                     {
                         SQGiftView sQGiftView = new SQGiftView();
